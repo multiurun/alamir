@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\web\NewsLetter;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Dashboard\PostController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -58,6 +59,8 @@ Route::get('dashboard/post/popular/{id}',[PostController::class,'popular']);
 Route::get('/', [WebCategoryController ::class, 'index']);
 Route::get('/category/{id}/{title_slug}', [WebCategoryController ::class, 'show']);
 Route::get('/post/{id}/{title_slug}', [webPostController ::class, 'showDetile']);
+//add-subscriber-email
+Route::post('/add-subscriber-email', [NewsLetter::class, 'addSubscriber']);
 //end web
 Route::middleware('auth')->group(function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

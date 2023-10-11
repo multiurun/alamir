@@ -109,8 +109,7 @@ class PostController extends Controller
         'meta_title'=>$request->meta_title,
         'meta_description'=>$request->meta_description,
         'key_words'=>$request->key_words,
-        'image'=>$old_image,
-        'video'=>$old_video,
+        
     ]);
     if ($request->file('file_name')) {
         unlink($old_image);

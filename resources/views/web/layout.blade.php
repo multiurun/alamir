@@ -146,13 +146,14 @@ $settings= Setting::select('*')->first();
                         <div class="footer-widget">
                             <h3 class="title">اشترك معنا</h3>
                             <div class="newsletter">
+                                <div>
                                 <p>
                                   اشترك معنا ليصلك ايميل بكل الاخبار الجديدة قم بادخال بريدك الالكتروني هنا
                                 </p>
-                                <form>
-                                    <input class="form-control text-left " type="email">
-                                    <button class="btn">اشتراك</button>
-                                </form>
+                                    
+                                    <input pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" class="form-control text-left" type="email" name="newsletter_subscriber" id="newsletter_subscriber" >
+                                    <button class="btn subscribe_btn">اشتراك</button>
+                               
                             </div>
                         </div>
                     </div>
@@ -173,6 +174,29 @@ $settings= Setting::select('*')->first();
 
         <!-- Template Javascript -->
         <script src="{{asset("web/js/main.js")}}"></script>
+        <script>
+         const subscribe = () => {
+            console.log("adsf")
+
+            var newsletter_subscriber =$("input#newsletter_subscriber").val();
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if( regex.test(newsletter_subscriber) == false){
+                alert("من فضلك ادخل اميل صحيح");
+            }
+            $.ajax({
+                method:'post', url:'/add-subscriber-email',
+                data: { 'newsletter_subscriber': newsletter_subscriber },
+                success: (data) => {
+                    if(resp== "exists"){
+                        alert('هذا الاميل موجود سابقا');
+                    }else if(resp== "saved"){
+                        alert(' شكرا لاشتراكك معنا');
+                    }
+                },error: () => { alert('فشل'); }
+            });
+         }
+         $(".newsletter .subscribe_btn").on("click", subscribe);
+        </script>
         @yield('script')
     </body>
 </html>
